@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Family Tree dengan Treant.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Treant CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/treant-js/1.0/Treant.css"
+    />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      #tree {
+        width: 100%;
+        height: 500px;
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Visualisasi Family Tree (Treant.js)</h1>
+
+    <div id="tree"></div>
+
+    <!-- Raphael.js (dependency Treant) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+
+    <!-- Treant.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/treant-js/1.0/Treant.min.js"></script>
+
+    <script>
+      /*
+    Struktur data tree
+    Total node: 6
+  */
+
+      const chartConfig = {
+        chart: {
+          container: "#tree",
+          rootOrientation: "NORTH",
+          nodeAlign: "CENTER",
+          connectors: {
+            type: "step",
+          },
+          node: {
+            HTMLclass: "node",
+          },
+        },
+
+        nodeStructure: {
+          text: {
+            name: "Abdul Muthalib + Fatimah binti Amr",
+            title: "Kakek/nenek dari Ayah",
+          },
+          children: [
+            {
+              text: {
+                name: "Abdullah + Aminah binti Wahb",
+                title: "Ayah/ibu",
+              },
+              children: [
+                {
+                  text: {
+                    name: "Nabi Muhammad",
+                    title: "Anak",
+                  },
+                },
+              ],
+            },
+            {
+              text: {
+                name: "Abu Thalib",
+                title: "Paman",
+              },
+            },
+          ],
+        },
+      };
+
+      // Render tree
+      new Treant(chartConfig);
+    </script>
+  </body>
+</html>
