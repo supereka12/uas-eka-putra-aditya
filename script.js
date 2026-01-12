@@ -32,6 +32,8 @@ function saveNodes() {
 // Render node ke halaman
 function renderNodes() {
   const container = document.getElementById("extraNodes");
+  if (!container) return;
+
   container.innerHTML = "";
 
   extraNodes.forEach((n) => {
@@ -39,13 +41,17 @@ function renderNodes() {
     div.className = "node extra-node";
 
     div.innerHTML = `
-      <img src="images/default-node.jpg" />
+      <img src="${n.image}" />
       <span>${n.name}<br><small>(${n.role})</small></span>
+      <button type="button" class="delete-btn"
+        onclick="deleteExtraNode(${n.id})">✖</button>
     `;
 
     container.appendChild(div);
   });
 }
+
+
 
 
 // Tambah node baru
@@ -78,12 +84,13 @@ function addNode() {
       name,
       role,
       parent,
-      image: reader.result // BASE64
+      image: reader.result
     };
 
-    let data = JSON.parse(localStorage.getItem("familyTree")) || [];
-    data.push(newNode);
-    localStorage.setItem("familyTree", JSON.stringify(data));
+    extraNodes.push(newNode);
+    saveNodes();
+    renderNodes();
+    updateTreeInfo();
 
     alert("Node berhasil ditambahkan!");
     document.getElementById("familyForm").reset();
@@ -118,13 +125,28 @@ function updateTreeInfo() {
   `;
 }
 
-div.className = "node extra-node";
 
-function deleteNode(id) {
-  const node = document.getElementById(id);
-  if (node) {
-    if (confirm("Yakin mau hapus node ini?")) {
-      node.remove();
-    }
-  }
+function clearExtraNodes() {
+  if (!confirm("Hapus semua node tambahan?")) return;
+
+  extraNodes = [];
+  localStorage.removeItem("extraNodes");
+  renderNodes();
+  updateTreeInfo();
+}
+
+window.deleteExtraNode = deleteExtraNode;
+
+function deleteExtraNode(id) {
+  if (!confirm("Yakin mau hapus node ini?")) return;
+
+  // Hapus dari array
+  extraNodes = extraNodes.filter((node) => node.id !== id);
+
+  // Simpan ulang ke localStorage
+  saveNodes();
+
+  // Render ulang tampilan
+  renderNodes();
+  updateTreeInfo();
 }
