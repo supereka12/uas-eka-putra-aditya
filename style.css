@@ -383,3 +383,364 @@ img {
   cursor: pointer;
   font-size: 12px;
 }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+}
+
+header {
+  background: #1f2933;
+  color: #fff;
+  padding: 16px;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+nav button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #374151;
+  color: #fff;
+}
+
+nav button.active {
+  background: #2563eb;
+}
+
+main {
+  background: #fff;
+  padding: 20px;
+  min-height: 80vh;
+}
+
+section {
+  display: none;
+}
+
+section.active {
+  display: block;
+}
+
+ul.tree {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+ul.tree li {
+  margin: 6px 0;
+}
+
+.note {
+  margin-top: 16px;
+  padding: 12px;
+  background: #fff7ed;
+  border-left: 4px solid #f59e0b;
+}
+
+footer {
+  background: #e5e7eb;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+}
+
+img {
+  max-width: 100%;
+  margin-top: 12px;
+  border: 1px solid #ccc;
+}
+
+
+
+.img-profil {
+  display: inline-block;
+  height: 150px;
+  width: 150px;
+  text-align: center;
+  border: solid 1px #ccc;
+  border-radius: 50%;
+  transition: .3s;
+  font-size: 600%;
+}
+
+.img-profil:hover {
+  transform: scale(1.1);
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.red {
+  color: red;
+}
+
+.tree {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.node {
+  display: inline-block;
+  padding: 14px 22px;
+  border-radius: 10px;
+  border: 2px solid #333;
+  min-width: 200px;
+  background: #e5f0ff;
+  font-weight: bold;
+}
+
+.node.root {
+  background: #fde68a;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  gap: 120px;
+}
+
+.child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* GARIS */
+.v-line {
+  width: 2px;
+  height: 30px;
+  background: #333;
+  margin: 0 auto;
+}
+
+.v-line.small {
+  height: 20px;
+}
+
+.h-line {
+  width: 520px;
+  height: 2px;
+  background: #333;
+  margin: 0 auto;
+}
+
+.node.root {
+  background: #fde68a;
+}
+
+.node.parent {
+  background: #bfdbfe;
+}
+
+.node.grandparent {
+  background: #dcfce7;
+}
+
+.node.great-grandparent {
+  background: #fbcfe8;
+}
+
+#extraNodes {
+  margin-top: 20px;
+  gap: 20px;
+}
+
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+body {
+  background: #ffd100;
+}
+
+/* TREE CONTAINER */
+.tree-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.tree ul {
+  padding-top: 30px;
+  position: relative;
+  transition: 0.5s;
+}
+
+.tree li {
+  float: left;
+  text-align: center;
+  list-style-type: none;
+  position: relative;
+  padding: 30px 5px 0 5px;
+}
+
+/* GARIS ATAS */
+.tree li::before,
+.tree li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 50%;
+  border-top: 2px solid #000;
+  width: 50%;
+  height: 30px;
+}
+
+.tree li::after {
+  right: auto;
+  left: 50%;
+  border-left: 2px solid #000;
+}
+
+.tree li:only-child::after,
+.tree li:only-child::before {
+  display: none;
+}
+
+.tree li:only-child {
+  padding-top: 0;
+}
+
+.tree li:first-child::before,
+.tree li:last-child::after {
+  border: 0 none;
+}
+
+.tree li:last-child::before {
+  border-right: 2px solid #000;
+  border-radius: 0 5px 0 0;
+}
+
+.tree li:first-child::after {
+  border-radius: 5px 0 0 0;
+}
+
+/* GARIS KE BAWAH */
+.tree ul ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 2px solid #000;
+  width: 0;
+  height: 30px;
+}
+
+/* NODE CARD */
+.node-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  min-width: 200px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  border: 2px solid #1fa97a;
+}
+
+/* FOTO */
+.node-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #eee;
+  object-fit: cover;
+}
+
+/* TEXT */
+.node-name {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.node-role {
+  font-size: 12px;
+  color: #555;
+}
+
+/* VARIASI NODE */
+.style-root {
+  border: 2px solid #2563eb;
+}
+
+.style-parent {
+  border: 2px solid #10b981;
+}
+
+.style-leaf {
+  border: 2px dashed #9ca3af;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .tree li {
+    float: none;
+    padding: 20px 0;
+  }
+
+  .tree li::before,
+  .tree li::after,
+  .tree ul ul::before {
+    display: none;
+  }
+}
+
+
+.delete-btn:hover {
+  background: #7f1d1d;
+}
+
+.profil-wrapper {
+  display: flex;
+  margin: 20px 0;
+}
+
+.img-profil {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #444;
+}
+
+.img-profil img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.extra-node {
+  position: relative;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 10;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  font-size: 12px;
+}
