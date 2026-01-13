@@ -1,69 +1,29 @@
-function showPage(pageId) {
-  const sections = document.querySelectorAll("main section");
-  const buttons = document.querySelectorAll("nav button");
+/* ================= NAVIGATION ================= */
+function showPage(id) {
+  document.querySelectorAll("main section").forEach(sec => {
+    sec.classList.remove("active");
+  });
 
-  sections.forEach((section) => section.classList.remove("active"));
-  buttons.forEach((btn) => btn.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 
-  document.getElementById(pageId).classList.add("active");
-
-  const btn = Array.from(buttons).find((b) =>
-    b.textContent.toLowerCase().includes(pageId)
-  );
-  if (btn) btn.classList.add("active");
-}
-
-let extraNodes = [];
-
-// Ambil data dari localStorage saat halaman dibuka
-function loadNodes() {
-  const saved = localStorage.getItem("extraNodes");
-  if (saved) {
-    extraNodes = JSON.parse(saved);
-    renderNodes();
-  }
-}
-
-// Simpan ke localStorage
-function saveNodes() {
-  localStorage.setItem("extraNodes", JSON.stringify(extraNodes));
-}
-
-// Render node ke halaman
-function renderNodes() {
-  const container = document.getElementById("extraNodes");
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  extraNodes.forEach((n) => {
-    const div = document.createElement("div");
-    div.className = "node extra-node";
-
-    div.innerHTML = `
-      <img src="${n.image}" />
-      <span>${n.name}<br><small>(${n.role})</small></span>
-      <button type="button" class="delete-btn"
-        onclick="deleteExtraNode(${n.id})">✖</button>
-    `;
-
-    container.appendChild(div);
+  document.querySelectorAll("nav button").forEach(btn => {
+    btn.classList.remove("active");
+    if (btn.getAttribute("onclick")?.includes(id)) {
+      btn.classList.add("active");
+    }
   });
 }
 
-
-
-
-// Tambah node baru
+/* ================= ADD NODE (TREE DINAMIS) ================= */
 function addNode() {
-  const name = document.getElementById("name").value;
-  const role = document.getElementById("role").value;
-  const parent = document.getElementById("parent").value;
+  const name = document.getElementById("name").value.trim();
+  const role = document.getElementById("role").value.trim();
+  const parentName = document.getElementById("parent").value.trim();
   const imageInput = document.getElementById("image");
   const file = imageInput.files[0];
 
-  if (!name || !role || !file) {
-    alert("Nama, peran, dan foto WAJIB diisi");
+  if (!name || !role || !parentName || !file) {
+    alert("Nama, peran, parent, dan foto WAJIB diisi!");
     return;
   }
 
@@ -72,25 +32,45 @@ function addNode() {
     return;
   }
 
-  if (file.size > 100 * 1024) {
-    alert("Ukuran foto maksimal 100KB");
+  // cari node parent berdasarkan NAMA
+  const allNodes = document.querySelectorAll(".node-card");
+  let parentNode = null;
+
+  allNodes.forEach(node => {
+    const nodeName = node.querySelector(".node-name")?.textContent.trim();
+    if (nodeName === parentName) {
+      parentNode = node;
+    }
+  });
+
+  if (!parentNode) {
+    alert("Parent tidak ditemukan! Pastikan nama persis sama.");
     return;
   }
 
   const reader = new FileReader();
   reader.onload = function () {
-    const newNode = {
-      id: Date.now(),
-      name,
-      role,
-      parent,
-      image: reader.result
-    };
+    const parentLi = parentNode.closest("li");
 
-    extraNodes.push(newNode);
-    saveNodes();
-    renderNodes();
-    updateTreeInfo();
+    let childUl = parentLi.querySelector(":scope > ul");
+    if (!childUl) {
+      childUl = document.createElement("ul");
+      parentLi.appendChild(childUl);
+    }
+
+    const childId = "node_" + Date.now();
+
+    const childLi = document.createElement("li");
+    childLi.innerHTML = `
+      <div class="node-card style-leaf" id="${childId}">
+        <button class="delete-btn" onclick="deleteNode('${childId}')">✖</button>
+        <img src="${reader.result}" class="node-img">
+        <span class="node-name">${name}</span>
+        <span class="node-role">${role}</span>
+      </div>
+    `;
+
+    childUl.appendChild(childLi);
 
     alert("Node berhasil ditambahkan!");
     document.getElementById("familyForm").reset();
@@ -99,54 +79,17 @@ function addNode() {
   reader.readAsDataURL(file);
 }
 
-// Jalankan saat halaman dibuka
-window.onload = loadNodes;
+/* ================= DELETE NODE ================= */
+function deleteNode(id) {
+  const node = document.getElementById(id);
+  if (!node) return;
 
-// ===== LEVEL 6 =====
+  if (!confirm("Yakin ingin menghapus node ini beserta turunannya?")) return;
 
-// Jumlah node statis (tree utama Level 3)
-const STATIC_NODE_COUNT = 7;
-
-// Depth tree statis (hingga buyut)
-const STATIC_TREE_DEPTH = 3;
-
-// Update info X & Y
-function updateTreeInfo() {
-  const totalNodes = STATIC_NODE_COUNT + extraNodes.length;
-  const depth = STATIC_TREE_DEPTH;
-
-  const info = document.getElementById("treeInfo");
-  if (!info) return;
-
-  info.innerHTML = `
-    <strong>Informasi Tree:</strong><br>
-    Total Node (X): <b>${totalNodes}</b><br>
-    Depth Tree (Y): <b>${depth}</b>
-  `;
-}
-
-
-function clearExtraNodes() {
-  if (!confirm("Hapus semua node tambahan?")) return;
-
-  extraNodes = [];
-  localStorage.removeItem("extraNodes");
-  renderNodes();
-  updateTreeInfo();
-}
-
-window.deleteExtraNode = deleteExtraNode;
-
-function deleteExtraNode(id) {
-  if (!confirm("Yakin mau hapus node ini?")) return;
-
-  // Hapus dari array
-  extraNodes = extraNodes.filter((node) => node.id !== id);
-
-  // Simpan ulang ke localStorage
-  saveNodes();
-
-  // Render ulang tampilan
-  renderNodes();
-  updateTreeInfo();
+  const li = node.closest("li");
+  if (li) {
+    li.remove();
+  } else {
+    node.remove();
+  }
 }
