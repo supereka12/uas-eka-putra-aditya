@@ -68,60 +68,98 @@
         </form>
       </section>
 
-<section id="visual">
+      <section id="visual">
   <h2>My Family Tree</h2>
 
-  <div class="tree">
-    <!-- ROOT -->
-    <div class="node root" id="node-aku">
-      <img src="images/aku.jpeg" />
-      <span>AKU</span>
-      <button class="delete-btn" onclick="deleteNode('node-aku')">✖</button>
-    </div>
+  <div class="tree-container">
+    <div class="tree">
+      <ul>
+        <li>
+          <div class="node-card style-root" id="root">
+            <button class="delete-btn" onclick="deleteNode('root')">✖</button>
+            <img src="images/profile.jpg" class="node-img">
+            <span class="node-name">Hasyim bin Abdu Manaf</span>
+            <span class="node-role">Kakek Buyut</span>
+          </div>
 
-    <div class="v-line"></div>
-    <div class="h-line"></div>
+          <ul>
+            <li>
+              <div class="node-card style-parent" id="kakek">
+                <button class="delete-btn" onclick="deleteNode('kakek')">✖</button>
+                <img src="images/profile.jpg" class="node-img">
+                <span class="node-name">Abdul Muthalib</span>
+                <span class="node-role">Kakek</span>
+              </div>
 
-    <!-- ORANG TUA -->
-    <div class="row">
-      <!-- AYAH -->
-      <div class="child">
-        <div class="v-line small"></div>
-        <div class="node parent" id="node-ayah">
-          <img src="images/ayah.jpeg" />
-          <span>Ayah</span>
-          <button class="delete-btn" onclick="deleteNode('node-ayah')">✖</button>
-        </div>
+              <ul>
+                <li>
+                  <div class="node-card style-parent" id="ayah">
+                    <button class="delete-btn" onclick="deleteNode('ayah')">✖</button>
+                    <img src="images/profile.jpg" class="node-img">
+                    <span class="node-name">Abdullah</span>
+                    <span class="node-role">Ayah</span>
+                  </div>
 
-        <div class="v-line small"></div>
-        <div class="node grandparent" id="node-kakek">
-          <img src="images/kakek.jpg" />
-          <span>Kakek</span>
-          <button class="delete-btn" onclick="deleteNode('node-kakek')">✖</button>
-        </div>
-      </div>
+                  <ul>
+                    <li>
+                      <div class="node-card style-root" id="nabi">
+                        <button class="delete-btn" onclick="deleteNode('nabi')">✖</button>
+                        <img src="images/profile.jpg" class="node-img">
+                        <span class="node-name">Nabi Muhammad SAW</span>
+                        <span class="node-role">Tokoh Utama</span>
+                      </div>
 
-      <!-- IBU -->
-      <div class="child">
-        <div class="v-line small"></div>
-        <div class="node parent" id="node-ibu">
-          <img src="images/ibu.jpeg" />
-          <span>Ibu</span>
-          <button class="delete-btn" onclick="deleteNode('node-ibu')">✖</button>
-        </div>
+                      <ul>
+                        <li>
+                          <div class="node-card style-leaf" id="fatimah">
+                            <button class="delete-btn" onclick="deleteNode('fatimah')">✖</button>
+                            <img src="images/profile.jpg" class="node-img">
+                            <span class="node-name">Fatimah Az-Zahra</span>
+                            <span class="node-role">Anak</span>
+                          </div>
+                        </li>
 
-        <div class="v-line small"></div>
-        <div class="node grandparent" id="node-nenek">
-          <img src="images/nenek.png" />
-          <span>Nenek</span>
-          <button class="delete-btn" onclick="deleteNode('node-nenek')">✖</button>
-        </div>
-      </div>
+                        <li>
+                          <div class="node-card style-leaf" id="ibrahim">
+                            <button class="delete-btn" onclick="deleteNode('ibrahim')">✖</button>
+                            <img src="images/profile.jpg" class="node-img">
+                            <span class="node-name">Ibrahim</span>
+                            <span class="node-role">Anak</span>
+                          </div>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <div class="node-card style-parent" id="paman">
+                    <button class="delete-btn" onclick="deleteNode('paman')">✖</button>
+                    <img src="images/profile.jpg" class="node-img">
+                    <span class="node-name">Abu Thalib</span>
+                    <span class="node-role">Paman</span>
+                  </div>
+
+                  <ul>
+                    <li>
+                      <div class="node-card style-leaf" id="ali">
+                        <button class="delete-btn" onclick="deleteNode('ali')">✖</button>
+                        <img src="images/profile.jpg" class="node-img">
+                        <span class="node-name">Ali bin Abi Thalib</span>
+                        <span class="node-role">Anak Paman / Sepupu</span>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
-  <div id="extraNodes" class="row extra-nodes"></div>
 </section>
-
 
 
 
